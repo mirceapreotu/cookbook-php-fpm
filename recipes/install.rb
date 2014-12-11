@@ -21,6 +21,11 @@
 include_recipe 'php-fpm::repository' unless node['php-fpm']['skip_repository_install']
 include_recipe 'apt::default' if node['platform_family'] == 'debian'
 
+if RUBY_VERSION =~ /1.9/
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
+end
+
 if node['php-fpm']['package_name'].nil?
   if platform_family?("rhel")
     php_fpm_package_name = "php-fpm"
